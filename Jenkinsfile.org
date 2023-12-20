@@ -1,0 +1,53 @@
+pipeline {
+
+  environment {
+    dockerimagename = "chloong/react-app"
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+	script {
+                    git branch: 'main',
+                        credentialsId: 'GithubCredentials',
+        		url: 'https://github.com/chloongloong/jenkins-kubernetes-deployment.git'
+                }
+      }
+    }
+
+    stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build dockerimagename
+        }
+      }
+    }
+
+    stage('Pushing Image') {
+      environment {
+               registryCredential = 'dockerhub-credentials'
+           }
+      steps{
+        script {
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push("latest")
+          }
+        }
+      }
+    }
+
+    stage('Deploying React.js container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", "service-lb.yaml")
+        }
+      }
+    }
+
+  }
+
+}

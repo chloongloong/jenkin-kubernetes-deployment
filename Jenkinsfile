@@ -5,7 +5,35 @@ pipeline {
     dockerImage = ""
   }
 
-  agent any
+ agent {
+    kubernetes {
+      label 'jenkins-agent-jnlp'
+      defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+  component: ci
+spec:
+  # Use service account that can deploy to all namespaces
+  serviceAccountName: cd-jenkins
+  containers:
+  - name: docker
+    image: docker:latest
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
+"""
+}
+   }
 
   stages {
 
@@ -21,21 +49,21 @@ pipeline {
 
     stage('Build image') {
       steps{
-        script {
-          dockerImage = docker.build dockerimagename
+	container('docker') {
+          sh """
+             docker build -t $dockerimagename:$BUILD_NUMBER .
+          """
         }
       }
     }
 
-    stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerhub-credentials'
-           }
+    stage('Push image') {
       steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
+	container('docker') {
+          sh """
+             docker image tag $dockerimagename:$BUILD_NUMBER $dockerimagename:latest
+	     docker image push $dockerimagename:latest
+          """
         }
       }
     }

@@ -7,8 +7,8 @@ pipeline {
 
  agent {
     kubernetes {
-      label 'jenkins-agent-jnlp'
-      defaultContainer 'jnlp'
+      #label 'jenkins-agent-jnlp'
+      #defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
 kind: Pod
@@ -17,7 +17,7 @@ labels:
   component: ci
 spec:
   # Use service account that can deploy to all namespaces
-  serviceAccountName: cd-jenkins
+  serviceAccountName: jenkins
   containers:
   - name: docker
     image: docker:latest

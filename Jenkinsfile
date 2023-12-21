@@ -15,7 +15,7 @@ labels:
   component: ci
 spec:
   # Use service account that can deploy to all namespaces
-  serviceAccountName: jenkins
+  # serviceAccountName: jenkins
   containers:
   - name: docker
     image: docker:latest

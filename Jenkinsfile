@@ -39,7 +39,7 @@ spec:
       steps {
 	script {
                     git branch: 'main',
-                        credentialsId: 'githubcredentials',
+                        credentialsId: 'github-credential',
         		url: 'https://github.com/chloongloong/jenkins-kubernetes-deployment.git'
                 }
       }

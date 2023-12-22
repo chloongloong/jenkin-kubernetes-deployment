@@ -1,5 +1,3 @@
-pipeline {
-
 podTemplate(containers: [
     containerTemplate(
         name: 'docker', 
@@ -20,5 +18,4 @@ podTemplate(containers: [
         }
 
     }
-}
 }

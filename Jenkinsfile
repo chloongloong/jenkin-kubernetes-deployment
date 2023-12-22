@@ -16,6 +16,9 @@ labels:
 spec:
   # Use service account that can deploy to all namespaces
   # serviceAccountName: jenkins
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
   containers:
   - name: docker
     image: docker:latest

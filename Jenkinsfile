@@ -1,17 +1,16 @@
 podTemplate(containers: [
     containerTemplate(
-        name: 'docker', 
-        image: 'docker'
+        name: 'jnlp', 
+        image: 'jenkins/inbound-agent:latest'
         )
   ]) {
 
     node(POD_LABEL) {
-        stage('docker build stage') {
-            container('docker') {
+        stage('Get a Maven project') {
+            container('jnlp') {
                 stage('Shell Execution') {
                     sh '''
                     echo "Hello! I am executing shell"
-		    docker version
                     '''
                 }
             }

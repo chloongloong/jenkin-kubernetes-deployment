@@ -24,13 +24,11 @@ podTemplate(yaml: '''
   node(POD_LABEL) {
 
     stage('Checkout Source') {
-      steps {
 	script {
                     git branch: 'main',
                         credentialsId: 'github-credential',
         		url: 'https://github.com/chloongloong/jenkins-kubernetes-deployment.git'
                 }
-      }
     }
 
     stage('Build React-App Image') {

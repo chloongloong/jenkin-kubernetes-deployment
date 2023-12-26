@@ -21,12 +21,13 @@ pipeline {
     }
   }
 
-stage('test kubectl installation') {
-      steps {
-        container('kubectl') {
-          sh 'kubectl get all' 
-        }
-      }
-    }
+	stages{
+		stage('test kubectl installation') {
+      			steps {
+        			container('kubectl') {
+          				sh 'kubectl get all' 
+        			}	
+      			}
+    		}
+	}
 }
-

@@ -25,7 +25,7 @@ stages{
         stage('test kubectl installation') {
       	 steps {
            container('kubectl') {
-        	sh 'kubectl get all' 
+        	sh 'kubectl get pods' 
        	   } 	
          }
   	}

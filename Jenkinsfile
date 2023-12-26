@@ -12,6 +12,8 @@ pipeline {
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest
+            securityContext:
+              runAsUser: 1000
             command:
             - cat
             tty: true

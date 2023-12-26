@@ -5,7 +5,7 @@ pipeline {
         apiVersion: v1
         kind: Pod
         metadata:
-           namespace: jenkins
+          namespace: jenkins
           labels:
             app: jenkins-ci
         spec:

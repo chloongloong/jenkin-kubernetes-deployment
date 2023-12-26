@@ -1,11 +1,32 @@
-podTemplate(inheritFrom: 'kube-agent')
-{
-node(POD_LABEL) {
-	stage('List all for namespace: jenkins') {
-        	withKubeConfig([namespace: "jenkins"]) {
-          	sh 'kubectl get all'
-        	}
-  	}	
-}
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+	  namespace: jenkins
+          labels:
+            app: jenkins-ci
+        spec:
+	  securityContext:
+    	     runAsUser: 1000
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            command:
+            - cat
+            tty: true
+        '''
+    }
+  }
+
+stage('test kubectl installation') {
+      steps {
+        container('kubectl') {
+          sh 'kubectl get all' 
+        }
+      }
+    }
 }
 

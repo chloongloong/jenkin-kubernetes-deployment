@@ -1,0 +1,7 @@
+node(POD_LABEL) {
+    stage('Deploying React.js container to Kubernetes') {
+        script {
+          kubernetesDeploy(configs: "namespace.yaml", "deployment.yaml", "service-np.yaml")
+        }
+    }
+}

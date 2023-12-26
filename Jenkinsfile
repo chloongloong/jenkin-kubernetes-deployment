@@ -9,8 +9,6 @@ pipeline {
           labels:
             app: jenkins-ci
         spec:
-          securityContext:
-            runAsUser: 1000
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest

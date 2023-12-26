@@ -5,12 +5,12 @@ pipeline {
         apiVersion: v1
         kind: Pod
         metadata:
-	  namespace: jenkins
+           namespace: jenkins
           labels:
             app: jenkins-ci
         spec:
-	  securityContext:
-    	     runAsUser: 1000
+          securityContext:
+            runAsUser: 1000
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest
@@ -21,13 +21,13 @@ pipeline {
     }
   }
 
-	stages{
-		stage('test kubectl installation') {
-      			steps {
-        			container('kubectl') {
-          				sh 'kubectl get all' 
-        			}	
-      			}
-    		}
-	}
+stages{
+        stage('test kubectl installation') {
+      	 steps {
+           container('kubectl') {
+        	sh 'kubectl get all' 
+       	   } 	
+         }
+  	}
+}
 }

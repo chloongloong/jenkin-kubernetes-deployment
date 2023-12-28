@@ -51,8 +51,9 @@ podTemplate(yaml: '''
     stage('test kubectl installation') {
       container('kubectl') {
       	sh 'kubectl get pods'
-        sh 'kubectl apply -f namespace.yaml'
-        sh 'kubectl -n test-react-app get pods'
+        sh 'kubectl apply -f allin-exclude-service-deployment.yaml'
+	sh 'kubectl apply -f service-np.yaml'
+        sh 'kubectl -n test-react-app get all'
       }
     }
 

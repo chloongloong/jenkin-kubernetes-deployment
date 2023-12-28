@@ -2,9 +2,9 @@ podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
     spec:
+      securityContext:
+        runAsUser: 1000
       containers:
-        securityContext:
-          runAsUser: 1000
       - name: kubectl
         image: bitnami/kubectl:latest
         command:

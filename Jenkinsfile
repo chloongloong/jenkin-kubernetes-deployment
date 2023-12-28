@@ -43,7 +43,8 @@ podTemplate(yaml: '''
         stage('Build a NodeJs project') {
           sh '''
             pwd
-            cat $BUILD_NUMBER
+            // /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
+            // echo $BUILD_NUMBER
           '''
         }
       }

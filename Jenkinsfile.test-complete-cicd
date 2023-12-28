@@ -38,13 +38,11 @@ podTemplate(yaml: '''
                 }
     }
 
-            // /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
-            // echo $BUILD_NUMBER
     stage('Build React-App Image') {
       container('kaniko') {
-        stage('Build a NodeJs project') {
+        stage('Build Docker image using Kaniko') {
           sh '''
-            pwd
+             /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
           '''
         }
       }
@@ -52,8 +50,9 @@ podTemplate(yaml: '''
 
     stage('test kubectl installation') {
       container('kubectl') {
-        sh 'ls -lrt'
       	sh 'kubectl get pods'
+        sh 'kubectl apply -f namespace.yaml'
+        sh 'kubectl -n test-react-app get pods'
       }
     }
 

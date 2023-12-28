@@ -42,7 +42,7 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build Docker image using Kaniko') {
           sh '''
-             /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
+             /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER --destination chloong/hello-kaniko-react-app:latest
           '''
         }
       }

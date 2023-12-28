@@ -3,10 +3,10 @@ podTemplate(yaml: '''
     kind: Pod
     spec:
       containers:
-      - name: kubectl
-        image: bitnami/kubectl:latest
         securityContext:
           runAsUser: 1000
+      - name: kubectl
+        image: bitnami/kubectl:latest
         command:
         - cat
         tty: true
@@ -42,7 +42,7 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build a NodeJs project') {
           sh '''
-          //  /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
+            pwd
             cat $BUILD_NUMBER
           '''
         }

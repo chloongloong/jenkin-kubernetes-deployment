@@ -38,13 +38,13 @@ podTemplate(yaml: '''
                 }
     }
 
+            // /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
+            // echo $BUILD_NUMBER
     stage('Build React-App Image') {
       container('kaniko') {
         stage('Build a NodeJs project') {
           sh '''
             pwd
-            // /kaniko/executor --context `pwd` --destination chloong/hello-kaniko-react-app:$BUILD_NUMBER
-            // echo $BUILD_NUMBER
           '''
         }
       }
